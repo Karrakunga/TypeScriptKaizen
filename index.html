@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title> TypeScript Greeter </title>
+      <script src="node_modules/systemjs/dist/system.src.js"></script>    
+    <script>
+        System.config({
+            packages: {        
+            app: {
+                format: 'register',
+                defaultExtension: 'js'
+            }
+            }
+        });
+        System.import('app/app')
+            .then(null, console.error.bind(console));
+    </script>     
+  </head>
+  <body>
+  </body>
+</html>
