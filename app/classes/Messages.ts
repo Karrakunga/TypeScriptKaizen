@@ -4,7 +4,7 @@ export module Messages {
     }
 
     export class Greeter{
-        private message: Message = {Text: "World"};
+        private message: Message = {Text: "Peoples"};
         
         constructor(public greeting: string){}
             greet(){
