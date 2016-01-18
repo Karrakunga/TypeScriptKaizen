@@ -3,19 +3,7 @@
   <head>
       <title> TypeScript Greeter </title>
       <script src="node_modules/systemjs/dist/system.src.js"></script>    
-    <script>
-        System.config({
-            packages: {        
-            build: {
-                format: 'register',
-                defaultExtension: 'js',
-                baseURL: "/"
-            }
-            }
-        });
-        System.import('build/app/app')
-            .then(null, console.error.bind(console));
-    </script>     
+      <script src="systemConfig.js"></script>     
   </head>
   <body>
   </body>

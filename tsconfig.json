@@ -8,7 +8,7 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false,
-    "outDir": "build" 
+    "outDir": "app/js"
   },
   "exclude": [
     "node_modules"
