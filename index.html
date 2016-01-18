@@ -6,13 +6,14 @@
     <script>
         System.config({
             packages: {        
-            app: {
+            build: {
                 format: 'register',
-                defaultExtension: 'js'
+                defaultExtension: 'js',
+                baseURL: "/"
             }
             }
         });
-        System.import('build/app')
+        System.import('build/app/app')
             .then(null, console.error.bind(console));
     </script>     
   </head>
