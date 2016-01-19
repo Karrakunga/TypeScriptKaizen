@@ -6,7 +6,7 @@
     "tsc:w": "tsc -w",
     "lite": "lite-server",
     "start": "concurrent \"npm run tsc:w\" \"npm run lite\" \"gulp compress\" ",
-    "startmini": "concurrent \"gulp tsc\"  \"gulp develop\" \"npm run lite\" "
+    "startmini": "concurrent \"gulp tsc\"  \"gulp develop\" \"npm run lite\" ",
     "develop": "concurrent \"npm run tsc:w\" \"npm run lite\" "
   },
   "license": "ISC",
@@ -18,9 +18,6 @@
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.0",
     "zone.js": "0.5.10"
-  },
-  "devDependencies": {
-    "concurrently": "^1.0.0",
   },
   "license": "ISC",
   "dependencies": {
