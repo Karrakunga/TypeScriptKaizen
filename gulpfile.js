@@ -1,12 +1,12 @@
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
 var ts = require('gulp-typescript');
-var runSequence = require('run-sequence');
+var webserver = require('gulp-webserver');
  
 gulp.task('compress', function() {
-  return gulp.src('app/**/*.js')
-    .pipe(uglify())
-    .pipe(gulp.dest('build'));
+ return gulp.src('build/**/*.js')
+   .pipe(uglify())
+   .pipe(gulp.dest('build'));
 });
 
 var tsProject = ts.createProject('tsconfig.json');
@@ -19,14 +19,24 @@ gulp.task('tsc', function () {
 });
 
 gulp.task('tscw', function () {
-    gulp.watch('app/**/*.ts', ["tsc"]);
+    gulp.watch('app/**/*.ts', gulp.series("tsc"));
 });
 
-gulp.task('develop', function () {
-    gulp.watch('app/**/*.ts', ["tscw"]);
-    gulp.watch('app/**/*.js', ["compress"]);
+gulp.task('server', function(){
+    gulp.src('./', '!/**/*.ts')
+        .pipe(webserver({
+        livereload: true,
+        directoryListing: true,
+        open: 'index.html'
+        }));
 });
 
-gulp.task('bundle_and_minify', function(callback) {
-  runSequence('tsc','compress', callback);
-});
+gulp.task('develop', 
+    gulp.series('tsc', 
+        gulp.parallel('server','tscw')
+    )
+);
+
+gulp.task('build',
+    gulp.series('tsc','compress')
+);
