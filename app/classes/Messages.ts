@@ -4,11 +4,11 @@ export module Messages {
     }
 
     export class Greeter{
-        private message: Message = {Text: "Peoples"};
+        private message: Message = {Text: "People"};
         
         constructor(public greeting: string){}
             greet(){
-                return "<h1>" + this.greeting + ", " + this.message.Text + "</h1>";
+                return '<div class="message"><h1 class="header1">' + this.greeting + ', ' + this.message.Text + '</h1></div>';
             }
     }
 }
