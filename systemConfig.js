@@ -6,5 +6,5 @@ packages: {
   }
 }
 });
-System.import('app/js/app')
+System.import('app/js/app/app')
 	.then(null, console.error.bind(console));
