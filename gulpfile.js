@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
 var ts = require('gulp-typescript');
-var runSequence = require('run-sequence');
+var webserver = require('gulp-webserver');
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var shell = require('gulp-shell');
@@ -11,11 +11,15 @@ gulp.task('sass', function () {
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('./css'));
 });
+gulp.task('sassw', function(){
+	gulp.watch('app/sass/**/*.scss', gulp.series("sass"));
+});
+
  
 gulp.task('compress', function() {
-  return gulp.src('app/**/*.js')
-    .pipe(uglify())
-    .pipe(gulp.dest('build'));
+ return gulp.src('build/**/*.js')
+   .pipe(uglify())
+   .pipe(gulp.dest('build'));
 });
 
 var tsProject = ts.createProject('tsconfig.json');
@@ -30,14 +34,25 @@ gulp.task('tsc', function () {
 gulp.task('lite', shell.task([
     'lite-server'
 ]));
-
-gulp.task('develop', function () {
-
-    gulp.watch('app/sass/**/*.scss', ["sass"]);
-    gulp.watch('app/**/*.ts', ["tsc"]);
-    gulp.start('lite');
+gulp.task('tscw', function () {
+    gulp.watch('app/**/*.ts', gulp.series("tsc"));
 });
 
-gulp.task('bundle_and_minify', function(callback) {
-  runSequence('tsc','compress', callback);
+gulp.task('server', function(){
+    gulp.src('./', '!/**/*.ts')
+        .pipe(webserver({
+        livereload: true,
+        directoryListing: true,
+        open: 'index.html'
+        }));
 });
+
+gulp.task('develop', 
+    gulp.series('tsc', 
+        gulp.parallel('server','tscw', 'sassw')
+    )
+);
+
+gulp.task('build',
+    gulp.series('tsc','compress')
+);
