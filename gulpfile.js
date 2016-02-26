@@ -5,6 +5,7 @@ var webserver = require('gulp-webserver');
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var shell = require('gulp-shell');
+var jasmine = require('gulp-jasmine-phantom');
 
 gulp.task('sass', function () {
     gulp.src('app/sass/**/*.scss')
@@ -35,7 +36,8 @@ gulp.task('lite', shell.task([
     'lite-server'
 ]));
 gulp.task('tscw', function () {
-    gulp.watch('app/**/*.ts', gulp.series("tsc"));
+    gulp.watch('app/**/*.ts', gulp.series('tsc'));
+    gulp.watch('spec/**/*.ts', gulp.series('tsc'));
 });
 
 gulp.task('server', function(){
@@ -56,3 +58,10 @@ gulp.task('develop',
 gulp.task('build',
     gulp.series('tsc','compress')
 );
+
+gulp.task('test', function(){
+      return gulp.src('app/js/spec/unit.tests.spec.js')
+          .pipe(jasmine({
+            integration: false
+          }));
+});
