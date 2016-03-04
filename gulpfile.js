@@ -6,6 +6,7 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 var shell = require('gulp-shell');
 var jasmine = require('gulp-jasmine-phantom');
+var KarmaServer = require('karma').Server;
 
 gulp.task('sass', function () {
     gulp.src('app/sass/**/*.scss')
@@ -37,7 +38,6 @@ gulp.task('lite', shell.task([
 ]));
 gulp.task('tscw', function () {
     gulp.watch('app/**/*.ts', gulp.series('tsc'));
-    gulp.watch('spec/**/*.ts', gulp.series('tsc'));
 });
 
 gulp.task('server', function(){
@@ -59,9 +59,16 @@ gulp.task('build',
     gulp.series('tsc','compress')
 );
 
-gulp.task('test', function(){
-      return gulp.src('app/js/spec/unit.tests.spec.js')
-          .pipe(jasmine({
-            integration: false
-          }));
+gulp.task('test', function (done) {
+  new KarmaServer({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
+});
+
+gulp.task('testw', function (done) {
+  new KarmaServer({
+    configFile: __dirname + '/karma.conf.js',
+    autoWatch: true
+  }, done).start();
 });

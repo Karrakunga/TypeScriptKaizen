@@ -5,19 +5,17 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: './',
 
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['systemjs','jasmine'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'node_modules/systemjs/dist/system.src.js',
-      'testSystemConfig.js',
-      'app/js/spec/unit.tests.spec.js'
+      '**/*.tests.spec.ts'
     ],
 
 
@@ -52,25 +50,40 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
-
+    browsers: ['PhantomJS'],
+    
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: false,
-
-    // Concurrency level
-    // how many browser should be started simultanous
-    concurrency: Infinity//,
     
-    // plugins:[
-    //     'karma-chrome-launcher',
-    //     'karma-phantomjs-launcher'
-    // ]
+    systemjs: {
+        config: {
+            defaultJSExtensions: true,
+            paths:{
+                "typescript": "node_modules/typescript/lib/typescript.js",
+                "systemjs": "node_modules/systemjs/dist/system.js",
+                'system-polyfills': 'node_modules/systemjs/dist/system-polyfills.js',
+                'es6-module-loader': 'node_modules/es6-module-loader/dist/es6-module-loader.js'     
+            },
+            packages: {        
+                'spec': {
+                    defaultExtension: 'ts'
+                },
+                'app':{
+                    defaultExtension: 'ts'
+                }
+            },
+            transpiler: 'typescript',
+        },
+        serveFiles:[
+            'app/**/*.ts'
+        ]
+     }
   })
 }
