@@ -1,5 +1,5 @@
 {
-  "name": "TypeScript Kaizen",
+  "name": "typescript-kaizen",
   "version": "1.0.0",
   "scripts1": {
     "tsc": "tsc",
